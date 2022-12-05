@@ -10,7 +10,7 @@ const authorizeBaseUrl = "https://accounts.spotify.com/authorize"
 const authorizeParams = {
 	client_id: process.env.REACT_APP_SPOTIFY_CLIENT_ID || "",
 	response_type: "code",
-	redirect_uri: "http://localhost:3000",
+	redirect_uri: "http://localhost:3000/spotify-callback",
 	scope: "playlist-read-private playlist-read-collaborative",
 	state: uuidv4()
 }
