@@ -1,11 +1,17 @@
-import React from "react"
-import spotify_api from "../helpers/spotify_api"
+import { useEffect } from "react"
+import spotifyApi from "../helpers/spotifyApi"
 import { useSearchParams } from "react-router-dom"
 
 const SpotifyCallback = () => {
 	const [searchParams, setSearchParams] = useSearchParams()
-	console.log(searchParams.get("code"))
-	console.log(searchParams.get("state"))
+	const code = searchParams.get("code")
+	const state = searchParams.get("state")
+
+	useEffect(() => {
+		if (code && state) {
+			spotifyApi.requestAccessToken(code).then((res) => console.log(res))
+		}
+	}, [])
 
 	return <></>
 }

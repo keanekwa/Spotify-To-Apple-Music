@@ -1,11 +1,11 @@
 import React from "react"
-import spotify_api from "../helpers/spotify_api"
+import spotifyApi from "../helpers/spotifyApi"
 
 const Index = () => {
 	return (
 		<div className="App">
 			<header className="App-header">
-				<a href={spotify_api.authorize}>
+				<a href={spotifyApi.authorize}>
 					<button>Authorize</button>
 				</a>
 			</header>
