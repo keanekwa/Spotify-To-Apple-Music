@@ -42,10 +42,15 @@ const requestToken = async (code: string) => {
 	return res?.data?.access_token
 }
 
+const getPlaylists = (token: string) => {
+	axiosClient.get("/me/playlists", { headers: { Authorization: `Bearer ${token}` } }).then((res) => console.log(res))
+}
+
 const spotifyApi = {
 	authorize: authorize,
 	validateState: validateState,
-	requestToken: requestToken
+	requestToken: requestToken,
+	getPlaylists: getPlaylists
 }
 
 export default spotifyApi

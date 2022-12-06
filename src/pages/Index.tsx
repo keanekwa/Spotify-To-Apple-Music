@@ -5,7 +5,7 @@ import spotifyApi from "../helpers/spotifyApi"
 const Index = () => {
 	const [cookies, setCookie, removeCookie] = useCookies()
 
-	const onCode = async (code: any, params: any) => {
+	const onAuthorizeSpotify = async (code: any, params: any) => {
 		const state = params.get("state")
 
 		if (spotifyApi.validateState(state)) {
@@ -16,20 +16,23 @@ const Index = () => {
 		}
 	}
 
+	const onGetSpotifyPlaylists = () => {
+		spotifyApi.getPlaylists(cookies.spotifyToken)
+	}
+
 	return (
-		<div className="App">
-			<header className="App-header">
-				<OauthPopup
-					url={spotifyApi.authorize}
-					onCode={onCode}
-					onClose={() => {}}
-					title="Connect to Spotify"
-					width={400}
-					height={500}>
-					<button>Authorize</button>
-				</OauthPopup>
-			</header>
-		</div>
+		<>
+			<OauthPopup
+				url={spotifyApi.authorize}
+				onCode={onAuthorizeSpotify}
+				onClose={() => {}}
+				title="Connect to Spotify"
+				width={400}
+				height={500}>
+				<button>Connect to Spotify</button>
+			</OauthPopup>
+			{cookies?.spotifyToken && <button onClick={onGetSpotifyPlaylists}>Get Spotify Playlists</button>}
+		</>
 	)
 }
 
