@@ -42,15 +42,27 @@ const requestToken = async (code: string) => {
 	return res?.data?.access_token
 }
 
-const getPlaylists = (token: string) => {
-	axiosClient.get("/me/playlists", { headers: { Authorization: `Bearer ${token}` } }).then((res) => console.log(res))
+const getPlaylists = async (token: string) => {
+	const res = await axiosClient.get("/me/playlists", { headers: { Authorization: `Bearer ${token}` } })
+
+	return res?.data?.items
+}
+
+const getPlaylistTracks = async (token: string, href: string) => {
+	const res = await axiosClient.get(href, {
+		headers: { Authorization: `Bearer ${token}` },
+		params: { fields: "items(track(id, album, artists, name))" }
+	})
+
+	return res?.data?.items
 }
 
 const spotifyApi = {
 	authorize: authorize,
 	validateState: validateState,
 	requestToken: requestToken,
-	getPlaylists: getPlaylists
+	getPlaylists: getPlaylists,
+	getPlaylistTracks: getPlaylistTracks
 }
 
 export default spotifyApi
