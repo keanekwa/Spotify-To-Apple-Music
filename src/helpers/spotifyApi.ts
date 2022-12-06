@@ -6,7 +6,7 @@ import { Buffer } from "buffer"
 
 const client_id = process.env.REACT_APP_SPOTIFY_CLIENT_ID
 const client_secret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET
-const spotifyAxiosClient = axios.create({
+const axiosClient = axios.create({
 	baseURL: "https://api.spotify.com/v1"
 })
 
@@ -20,12 +20,12 @@ const authorizeParams = {
 }
 const authorize = authorizeBaseUrl + createParamString(authorizeParams)
 
-const validateAuthorizeState = (state: string) => {
+const validateState = (state: string) => {
 	return state === authorizeParams.state
 }
 
-const requestAccessToken = (code: string) => {
-	return axios.post(
+const requestToken = async (code: string) => {
+	const res = await axios.post(
 		"https://accounts.spotify.com/api/token",
 		qs.stringify({
 			grant_type: "authorization_code",
@@ -38,12 +38,14 @@ const requestAccessToken = (code: string) => {
 			}
 		}
 	)
+
+	return res?.data?.access_token
 }
 
 const spotifyApi = {
 	authorize: authorize,
-	validateAuthorizeState: validateAuthorizeState,
-	requestAccessToken: requestAccessToken
+	validateState: validateState,
+	requestToken: requestToken
 }
 
 export default spotifyApi
