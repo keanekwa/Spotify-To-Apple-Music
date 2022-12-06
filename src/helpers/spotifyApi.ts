@@ -14,7 +14,7 @@ const authorizeBaseUrl = "https://accounts.spotify.com/authorize"
 const authorizeParams = {
 	client_id: client_id || "",
 	response_type: "code",
-	redirect_uri: "http://localhost:3000/spotify-callback",
+	redirect_uri: "http://localhost:3000/callback",
 	scope: "playlist-read-private playlist-read-collaborative",
 	state: uuidv4()
 }

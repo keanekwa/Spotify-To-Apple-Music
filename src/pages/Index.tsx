@@ -1,4 +1,3 @@
-import React from "react"
 import { useCookies } from "react-cookie"
 import OauthPopup from "react-oauth-popup"
 import spotifyApi from "../helpers/spotifyApi"
