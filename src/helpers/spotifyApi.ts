@@ -20,6 +20,10 @@ const authorizeParams = {
 }
 const authorize = authorizeBaseUrl + createParamString(authorizeParams)
 
+const validateAuthorizeState = (state: string) => {
+	return state === authorizeParams.state
+}
+
 const requestAccessToken = (code: string) => {
 	return axios.post(
 		"https://accounts.spotify.com/api/token",
@@ -38,6 +42,7 @@ const requestAccessToken = (code: string) => {
 
 const spotifyApi = {
 	authorize: authorize,
+	validateAuthorizeState: validateAuthorizeState,
 	requestAccessToken: requestAccessToken
 }
 
