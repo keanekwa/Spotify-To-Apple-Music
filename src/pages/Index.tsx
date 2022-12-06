@@ -6,7 +6,7 @@ import spotifyApi from "../helpers/spotifyApi"
 const Index = () => {
 	const [cookies, setCookie, removeCookie] = useCookies()
 	const [spotifyPlaylists, setSpotifyPlaylists] = useState()
-	const [spotifyTracks, setSpotifyTracks] = useState()
+	const [spotifyTracks, setSpotifyTracks] = useState<JSX.Element[]>()
 
 	const onAuthorizeSpotify = async (code: any, params: any) => {
 		const state = params.get("state")
@@ -33,7 +33,6 @@ const Index = () => {
 
 	const onGetPlaylistTracks = async (href: string) => {
 		const tracks = await spotifyApi.getPlaylistTracks(cookies.spotifyToken, href)
-		console.log(tracks)
 		setSpotifyTracks(
 			tracks.map((t: any) => (
 				<li key={t?.track?.id}>

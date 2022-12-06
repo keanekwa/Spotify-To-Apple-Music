@@ -49,12 +49,20 @@ const getPlaylists = async (token: string) => {
 }
 
 const getPlaylistTracks = async (token: string, href: string) => {
-	const res = await axiosClient.get(href, {
-		headers: { Authorization: `Bearer ${token}` },
-		params: { fields: "items(track(id, album, artists, name))" }
-	})
+	let tracks: object[] = []
+	let next = href
 
-	return res?.data?.items
+	while (next) {
+		const res = await axiosClient.get(next, {
+			headers: { Authorization: `Bearer ${token}` },
+			params: { fields: "items(track(id, album, artists, name)), next" }
+		})
+
+		next = res?.data?.next
+		tracks.push(...res?.data?.items)
+	}
+
+	return tracks
 }
 
 const spotifyApi = {
